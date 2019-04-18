@@ -1,25 +1,9 @@
-# Systemix - Generator System
+Systemix
+========
 
-## Philosophy
+Kumpulan library independent siap pakai.
 
-Sefia - Secure, Easy, Fast, Integrated, Accurate 
+- Auto UPPERCASE when typing.
 
-## Secure
+- Limited input for number only.
 
-Secure is first.
-
-## Easy
-
-Don't make me think.
-
-## Fast
-
-Now or late.
-
-## Integrated
-
-One for All. All for one.
-
-## Accurate
-
-Sarcasm: How to Lie with Statistics.

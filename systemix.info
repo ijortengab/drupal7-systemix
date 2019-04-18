@@ -1,0 +1,4 @@
+name = Systemix Core
+core = 7.x
+package = Systemix
+dependencies[] = taxonomy_machine_name

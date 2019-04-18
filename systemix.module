@@ -1,0 +1,34 @@
+<?php
+
+include_once __DIR__ . '/vendor/autoload.php';
+
+/**
+ * Implements hook_library().
+ */
+function systemix_library() {
+    $path = drupal_get_path('module', 'systemix');
+    $libraries['systemix.typing_uppercase'] = [
+        'title' => 'Systemix Typing Uppercase',
+        'website' => 'https://github.com/ijortengab/drupal7-systemix',
+        'version' => '1.0.0',
+        'js' => [
+            $path.'/js/systemix-typing-uppercase.js' => [
+                'group' => JS_DEFAULT,
+            ],
+        ],
+    ];
+    $libraries['systemix.typing_number'] = [
+        'title' => 'Systemix Typing Number',
+        'website' => 'https://github.com/ijortengab/drupal7-systemix',
+        'version' => '1.0.0',
+        'js' => [
+            $path.'/js/jquery.inputfilter.js' => [
+                'group' => JS_LIBRARY,
+            ],
+            $path.'/js/systemix-typing-number.js' => [
+                'group' => JS_DEFAULT,
+            ],
+        ],
+    ];
+    return $libraries;
+}
