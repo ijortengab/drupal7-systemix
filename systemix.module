@@ -32,3 +32,17 @@ function systemix_library() {
     ];
     return $libraries;
 }
+
+
+/**
+ * Implements hook_views_api().
+ */
+function systemix_views_api() {
+    return array(
+        'api' => 3,
+    );
+}
+
+function systemix_menu_alter(&$items) {
+    Drupal\systemix\Menu\AutoCreate::menuAlter($items);
+}

@@ -2,3 +2,4 @@ name = Systemix Core
 core = 7.x
 package = Systemix
 dependencies[] = taxonomy_machine_name
+files[] = views/handlers/systemix_handler_field_bootstrap_button_dropdown.inc

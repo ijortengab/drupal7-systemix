@@ -1,6 +1,6 @@
 (function ($) {
 Drupal.systemix = Drupal.systemix || {}
-// Reference: 
+// Reference:
 // http://blog.vishalon.net/index.php/javascript-getting-and-setting-caret-position-in-textarea/
 // https://stackoverflow.com/questions/5757101/change-input-to-upper-case
 Drupal.systemix.typingUppercase = {

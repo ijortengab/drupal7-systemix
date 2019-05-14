@@ -13,6 +13,8 @@
         "psr-4": {"Drupal\\systemix\\": "src/"}
     },
     "require": {
-        "phpoffice/phpspreadsheet": "^1.6"
+        "phpoffice/phpspreadsheet": "^1.6",
+        "symfony/yaml": "^4.2",
+        "symfony/event-dispatcher": "^4.2"
     }
 }
