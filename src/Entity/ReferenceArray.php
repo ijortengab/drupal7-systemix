@@ -18,7 +18,7 @@ class ReferenceArray implements \Iterator
         return $this;
     }
 
-    public function value() {
+    public function getValue() {
         return null;
     }
 

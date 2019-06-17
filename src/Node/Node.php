@@ -5,11 +5,11 @@ namespace Drupal\systemix\Node;
 use Drupal\systemix\Entity\Entity;
 use Drupal\systemix\User\User;
 
-class Node
+class Node extends Entity
 {
 
-    protected $node;
-    protected $entity;
+    // protected $node;
+    // protected $entity;
     protected $author;
 
 
@@ -18,7 +18,7 @@ class Node
      */
     public function __construct($nodeObject)
     {
-        $this->node = $nodeObject;
+        parent::__construct('node', $nodeObject);
         return $this;
     }
 
@@ -27,7 +27,7 @@ class Node
      */
     public function isNew()
     {
-        return empty($this->node->nid);
+        return empty($this->entity_load->nid);
     }
 
     /**
@@ -35,21 +35,19 @@ class Node
      */
     public function isExists()
     {
-        return !empty($this->node->nid);
+        return !empty($this->entity_load->nid);
     }
 
     /**
      *
      */
-    public function __get($field)
-    {
-        if (null == $this->entity) {
-            $this->entity = new Entity('node', $this->node);
-        }
-        return $this->entity->{$field};
-    }
-
-
+    // public function __get($field)
+    // {
+        // if (null == $this->entity) {
+            // $this->entity = new Entity('node', $this->node);
+        // }
+        // return $this->entity->{$field};
+    // }
 
     /**
      *
@@ -57,9 +55,31 @@ class Node
     public function author()
     {
         if (null === $this->author) {
-            $this->author = new User($this->node->uid);
+            $this->author = new User($this->entity_load->uid);
         }
         return $this->author;
     }
+
+    /**
+     *
+     */
+    public function getType()
+    {
+        return $this->entity_load->type;
+    }
+
+    /**
+     *
+     */
+    /* public function save()
+    {
+        if (null == $this->entity) {
+            $this->entity = new Entity('node', $this->node);
+        }
+
+        $this->entity->save();
+        // return $this;
+    } */
+
 
 }

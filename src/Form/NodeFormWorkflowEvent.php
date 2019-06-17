@@ -4,7 +4,7 @@ namespace Drupal\systemix\Form;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class NodeFormEvent extends Event
+class NodeFormWorkflowEvent extends Event
 {
     protected $element_changed;
     protected $element_listener;
@@ -13,10 +13,27 @@ class NodeFormEvent extends Event
     /**
      *
      */
-    public function __construct(NodeFormElement $element)
+    public function __construct()
     {
-        $this->element_changed = $element;
         return $this;
+    }
+
+
+    /**
+     *
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
+
+
+    /**
+     *
+     */
+    public function getForm()
+    {
+        return $this->form;
     }
 
     /**

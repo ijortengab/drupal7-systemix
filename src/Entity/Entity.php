@@ -45,9 +45,9 @@ class Entity
         return $this;
     }
 
-    function value($modifier = null) {
+    function getValue($modifier = null) {
         if ($modifier == 'machine_name') {
-            return $this->release()->machine_name->value();
+            return $this->release()->machine_name->getValue();
         }
         $value = null;
         if (null !== $this->current_field_name) {
@@ -64,6 +64,31 @@ class Entity
         return $value;
     }
 
+    public function setValueBy($modifier, $_value)
+    {
+        return $this;
+    }
+
+    public function setValue($value)
+    {
+        // $_value = 2743;
+        $current_field_name = $this->current_field_name;
+        $this->current_field_reset();
+        $this->entity_wrapper->{$current_field_name} = $value;
+        // die('op');
+
+        return $this;
+    }
+    /**
+     *
+     */
+    public function save()
+    {
+        $this->entity_wrapper->save();
+        // return $this;
+    }
+
+
     function release() {
         $this->current_field_load();
         switch ($this->current_field_info['field']['type']) {
@@ -71,15 +96,15 @@ class Entity
                     // Get info, karena method ::value() akan mereset property
                     // $current_field_info;
                     $info = $this->current_field_info;
-                    $entity_load = $this->value();
+                    $entity_load = $this->getValue();
+                    $entity_type = $info['field']['settings']['target_type'];
                     if ($entity_load === null) {
-                        return new ReferenceNull;
+                        return new EntityEmpty($entity_type);
                     }
                     elseif(is_array($entity_load)){
                         return new ReferenceArray($entity_load, $info);
                     }
 
-                    $entity_type = $info['field']['settings']['target_type'];
                     return (new static($entity_type, $entity_load));
 
                 case '':
@@ -114,18 +139,20 @@ class Entity
             // Periksa current field.
             switch ($this->current_field_info['field']['type']) {
                 case 'entityreference':
+
                     // Get info, karena method ::value() akan mereset property
                     // $current_field_info;
                     $info = $this->current_field_info;
-                    $entity_load = $this->value();
+                    $entity_load = $this->getValue();
+                    $entity_type = $info['field']['settings']['target_type'];
 
                     if ($entity_load === null || $entity_load === false) {
-                        return new ReferenceNull;
+                        return new EntityEmpty($entity_type);
                     }
                     elseif(is_array($entity_load)){
                         return new ReferenceArray($entity_load);
                     }
-                    $entity_type = $info['field']['settings']['target_type'];
+                    // die('op');
                     return (new static($entity_type, $entity_load))->{$name};
 
                 case '':

@@ -33,6 +33,12 @@ function systemix_library() {
     return $libraries;
 }
 
+function systemix_systemix_conditional_attached_library() {
+   return [
+        'systemix_1' => ['systemix', 'systemix.typing_uppercase'],
+        'systemix_2' => ['systemix', 'systemix.typing_number'],
+    ];
+}
 
 /**
  * Implements hook_views_api().
@@ -44,5 +50,53 @@ function systemix_views_api() {
 }
 
 function systemix_menu_alter(&$items) {
-    Drupal\systemix\Menu\AutoCreate::menuAlter($items);
+    Drupal\systemix\Menu\Menu::autoCreate($items);
+    Drupal\systemix\Menu\Menu::disabledDefaultRoute($items);
+    Drupal\systemix\Menu\Menu::forwardPageCallback($items);
+}
+
+function systemix_ajax_callback($form, $form_state) {
+    if (!empty($form_state['triggering_element'])) {
+        $callback = $form_state['triggering_element']['#ajax']['callback2'];
+        return call_user_func_array(
+            $callback,
+            [$form, $form_state]
+        );
+    }
+}
+
+function systemix_form_validate_callback($form, &$form_state) {
+    if (isset($form['#validate2'])) {
+        foreach ($form['#validate2'] as $callback) {
+            call_user_func_array(
+                $callback,
+                [$form, &$form_state]
+            );
+        }
+    }
+}
+
+function systemix_form_submit_callback($form, &$form_state) {
+    if (isset($form['#submit2'])) {
+        foreach ($form['#submit2'] as $callback) {
+            call_user_func_array(
+                $callback,
+                [$form, &$form_state]
+            );
+        }
+    }
+}
+
+function systemix_form_actions_submit_redirect($form, &$form_state) {
+    $form_state['redirect'] = $form_state['systemix']['redirect'];
+}
+
+function systemix_page_callback() {
+    $menu_link_get_preferred = menu_link_get_preferred();
+    $menu_link_load = menu_link_load(menu_link_get_preferred()['mlid']);
+    if (isset($menu_link_load['options']['systemix_page_callback'])) {
+        $args = func_get_args();
+        return call_user_func_array($menu_link_load['options']['systemix_page_callback'], $args);
+    }
+    return drupal_not_found();
 }

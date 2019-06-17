@@ -2,12 +2,12 @@
 
 namespace Drupal\systemix\Menu;
 
-class AutoCreate
+class Menu
 {
     /**
      *
      */
-    public static function menuAlter(&$items)
+    public static function autoCreate(&$items)
     {
         $paths = array_keys($items);
         $storage = [];
@@ -31,6 +31,28 @@ class AutoCreate
             if (isset($items[$path]['type']) && $items[$path]['type'] == MENU_LOCAL_TASK) {
                 $items[$path]['type'] = $items[$path]['type'] | MENU_NORMAL_ITEM;
                 $items[$path]['expanded'] = true;
+            }
+        }
+    }
+
+    /**
+     * Disabled berbagai route bawaan system.
+     */
+    public static function disabledDefaultRoute(&$items)
+    {
+        $items['node/add']['access callback'] = 'user_access';
+        $items['node/add']['access arguments'] = ['administer site configuration'];
+    }
+    /**
+     *
+     */
+    public static function forwardPageCallback(&$items)
+    {
+        $paths = array_keys($items);
+        foreach ($paths as $path) {
+            if (isset($items[$path]['page callback']) && is_array($items[$path]['page callback'])) {
+                $items[$path]['options']['systemix_page_callback'] = $items[$path]['page callback'];
+                $items[$path]['page callback'] = 'systemix_page_callback';
             }
         }
     }

@@ -14,7 +14,7 @@ Contoh, Terdapat Node Form dengan conditional field sbb:
 Field Jenis Kelamin:
     - laki-laki
     - perempuan
-Field Apakah sudah sunat:
+Field Apakah sudah sunat
     - Iya
     - Belum
 Field Apakah sudah menikah:
@@ -66,7 +66,7 @@ $form->apakah_sunat->listen('jenis_kelamin','on_value_changed', function ($event
     }
 });
 $form->status_menikah->listen('jenis_kelamin','on_value_changed', function ($event) {
-    if ($event->getElementChanged()->getValue('machine_name') == 'retur') {
+    if ($event->getElementChanged()->getValue('machine_name') == 'perempuan') {
         $event->getElementListener()->show();
     }
 });
@@ -74,11 +74,19 @@ $form->status_menikah->listen('apakah_sunat','on_value_changed', function ($even
     if ($event->getElementChanged()->hasValue()) {
         $event->getElementListener()->show();
     }
+    else {
+        $event->getElementListener()->hide();
+    }
 });
-// Khusus untuk node edit form existing.
+// Digunakan saat node edit form existing.
 $form->status_menikah->listen('apakah_sunat','on_display_changed', function ($event) {
     if ($event->getElementChanged()->isVisible()) {
         $event->getElementListener()->show();
     };
 });
 ```
+
+Keputusan hide atau show mengikuti aturan pada function `node_access`, yakni
+Prioritas 1: Jika ada satu listener yang mengeset hide, maka element tersebut hide.
+Prioritas 2: Jika ada satu saja yang mengeset show, maka element tersebut show.
+Prioritas 3: elemet yang dilisten, maka otomatis hide.
