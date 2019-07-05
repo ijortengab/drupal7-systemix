@@ -100,3 +100,4 @@ function systemix_page_callback() {
     }
     return drupal_not_found();
 }
+

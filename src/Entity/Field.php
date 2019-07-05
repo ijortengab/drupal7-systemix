@@ -26,6 +26,11 @@ class Field
      */
     public static function getIdentifierByMachineName($field_name, $machine_name)
     {
+        static $cache = [];
+        if (isset($cache[$field_name]) && array_key_exists($machine_name, $cache[$field_name])) {
+            // Karena `null` juga merupakan value.
+            return $cache[$field_name][$machine_name];
+        }
         $value = null;
         switch (field_info_field($field_name)['type']) {
             case 'entityreference':
@@ -51,7 +56,8 @@ class Field
                 }
                 break;
         }
+        // Simpan pada cache.
+        $cache[$field_name][$machine_name] = $value;
         return $value;
     }
-
 }

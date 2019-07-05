@@ -105,7 +105,7 @@ class Entity
                         return new ReferenceArray($entity_load, $info);
                     }
 
-                    return (new static($entity_type, $entity_load));
+                    return (new self($entity_type, $entity_load));
 
                 case '':
                     // Do something.
@@ -153,7 +153,7 @@ class Entity
                         return new ReferenceArray($entity_load);
                     }
                     // die('op');
-                    return (new static($entity_type, $entity_load))->{$name};
+                    return (new self($entity_type, $entity_load))->{$name};
 
                 case '':
                     // Do something.

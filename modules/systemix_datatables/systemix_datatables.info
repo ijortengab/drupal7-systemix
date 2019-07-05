@@ -1,0 +1,5 @@
+name = Systemix DataTables
+description = Menyediakan berbagai cara method agar library DataTabels (https://datatables.net) dapat diterapkan di Drupal.
+core = 7.x
+dependencies[] = systemix
+files[] = views/systemix_datatables_style_plugin.inc
