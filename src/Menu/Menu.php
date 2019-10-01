@@ -16,6 +16,7 @@ class Menu
         foreach ($paths as $path) {
             if (isset($items[$path]['systemix']['menu_links_auto_create']) && $items[$path]['systemix']['menu_links_auto_create']) {
                 $storage[] = $path;
+                $items[$path]['expanded'] = true;
             }
         }
         $contains = [];

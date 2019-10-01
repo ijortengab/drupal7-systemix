@@ -12,6 +12,24 @@ class Node extends Entity
     // protected $entity;
     protected $author;
 
+    /**
+     * Implements of hook_node_access().
+     */
+    public static function disabledFormCreateDefault($content_type, $node, $op)
+    {
+        switch ($op) {
+            case 'create':
+                $type = is_string($node) ? $node : (isset($node->type) ? $node->type : null);
+                if ($type == $content_type) {
+                    $path = 'node/add/' . str_replace('_', '-', $content_type);
+                    if (strpos(current_path(), $path) === 0) {
+                        return NODE_ACCESS_DENY;
+                    }
+                }
+                break;
+        }
+    }
+    
 
     /**
      *

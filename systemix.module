@@ -101,3 +101,51 @@ function systemix_page_callback() {
     return drupal_not_found();
 }
 
+function systemix_collect_node_access($collect) {
+    if (in_array(NODE_ACCESS_DENY, $collect, TRUE)) {
+        return NODE_ACCESS_DENY;
+    }
+    elseif (in_array(NODE_ACCESS_ALLOW, $collect, TRUE)) {
+        return NODE_ACCESS_ALLOW;
+    }
+    else {
+        return NODE_ACCESS_IGNORE;
+    }
+}
+
+/**
+ * Implements of hook_date_format_types().
+ */
+function systemix_date_format_types() {
+    return [
+        'systemix_date_u' => t('Systemix Date Unix Timestamp'),
+        'systemix_date_c' => t('Systemix Date ISO-8601'),
+        'systemix_date_jfy' => t('Systemix Date jFY'),
+        'systemix_date_ymd' => t('Systemix Date Ymd'),
+    ];
+}
+
+function systemix_date_formats() {
+    return [
+        [
+            'type' => 'systemix_date_u',
+            'format' => 'U',
+            'locales' => [],
+        ],
+        [
+            'type' => 'systemix_date_c',
+            'format' => 'c',
+            'locales' => [],
+        ],
+        [
+            'type' => 'systemix_date_jfy',
+            'format' => 'j F Y',
+            'locales' => [],
+        ],
+        [
+            'type' => 'systemix_date_ymd',
+            'format' => 'Y-m-d',
+            'locales' => [],
+        ],
+    ];
+}
